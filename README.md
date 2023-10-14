@@ -1,19 +1,24 @@
 # AVOCA Website
 
-This project is a web scraper that retrieves information about laptops, PCs, screens, and other related products from various websites and then stored in a MySQL database hosted on PlanetScale. It allows users to search products by keywords or filter, and compare the specifications, prices, and other details of different products in order to make informed purchasing decisions. The scraper is built using the Selenium and BeautifulSoup libraries and the website is developed using the Flask framework.
 
 ## Features
 
-- Search for laptops, PCs, screens, and related products from multiple websites.
-- Retrieve detailed information such as specifications, brand, name, prices and the original shop.
-- Compare multiple products side by side.
-- Compare prices of the same or similar product across different websites.
-- Filter and sort results based on specific criteria (e.g., price range, brand, specifications, etc.).
-- User-friendly web interface for easy navigation and interaction.
+- **Recommendation system**: Gợi ý sản phẩm phù hợp với người dùng sử dụng `KNN`, `cosine_similarity`, `MatrixFactorization` dựa vào sản phẩm đã bán hoặc dữ liệu thông tin người dùng cung cấp.
 
-| Filter by Parameters                                    | Search by Keywords                                   |
-|---------------------------------------------------|---------------------------------------------------|
-| <img src="./demo/filter.png" width="1000px">     | <img src="./demo/search.png" width="1000px">    |
+- **DashBoard**: Theo dõi tình hình kinh doanh của nhà phân phối theo `thời gian hiện tại` và `các nước.`
+
+- **Private messaging system**: Request thêm hàng và trò chuyện giữa người dùng và nhà phân phối.
+
+- **Payment management system**: Quản lý thanh toán dành cho đơn vị phân phối/nhượng quyền (thanh toán bằng PayPal)
+
+- **Search system**: Tiềm kiếm sản phẩm theo tên, nhu cầu khách hàng.
+
+- **User system**: Đăng kí, đăng nhập và quản lý tài khoản của người dùng.
+
+
+| Recomendation System| DashBoard| Payment management system|
+|---------------------------------------------------|---------------------------------------------------| ---------------------------------------------------|
+| <img src="./demo/2.png" width="1000px">     | <img src="./demo/3.png" width="1000px">  |  <img src="./demo/1.png" width="1000px"> 
 
 ## Installation
 
