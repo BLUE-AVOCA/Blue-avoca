@@ -42,6 +42,7 @@ def create_dash_application(flask_app):
                     <!-- BOOTSTRAP -->
                     {%css%}
                     <title>{%title%}</title>
+                    <link rel="icon" href="../static/img/meat.png"
                 </head>
 
                 <body>
@@ -49,7 +50,7 @@ def create_dash_application(flask_app):
                             <nav class="navbar sticky-top bg-body-tertiary d-flex align-items-center justify-content-between p-4 " style="background-color: #e3f2fd;">
                                 <div class="header_logo container-fluid">
                                     <a class="navbar-brand" href="http://127.0.0.1:5000"  style="color: black;">
-                                        <img width="80" height="40" src="../static/img/logo1.png" alt="logo">
+                                        <img width="80" height="40" src="../static/img/logo.png" alt="logo">
                                         SheCodes
                                     </a>
                                     <div class="">
@@ -57,8 +58,6 @@ def create_dash_application(flask_app):
                                             <li class="p-2"><a href="http://127.0.0.1:5000" style='text-decoration: none; color:inherit'>Home</a></li>
                                             <li class="p-2"><a href="http://127.0.0.1:5000/about" style='text-decoration: none; color:inherit'>About Us</a></li>
                                             <li class="p-2"><a href="http://127.0.0.1:5000/products" style='text-decoration: none; color:inherit'>Products</a></li>
-                                            <li class="p-2 me-3"><a href="http://127.0.0.1:5000/company" style='text-decoration: none; color:inherit'>Company</a></li>
-
                                             <li class="">
                                                 <a class="text-light" href="http://127.0.0.1:5000/auth/login">
                                                     <button type="button" class="btn btn-primary">Login</button>
