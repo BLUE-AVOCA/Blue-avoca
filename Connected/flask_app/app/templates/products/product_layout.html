@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+{% block main %}
+    <div class="d-flex flex-row m-3">
+        <!-- Filter -->
+        <div class="col-3">
+            {% include 'products/filter.html' %}
+        </div>
+        <!-- Search and products -->
+        <div class="col-9">
+            <div class="d-flex flex-column">
+                <div class="m-1">
+                    {% include 'products/search.html' %}
+                </div>
+                <hr class="divider"/>
+                <div class="" style="height: 83vh; overflow-y: auto">
+                    {% include 'products/products.html'%}
+                </div>
+            </div>
+        </div>
+    </div>  
+
+
+{% endblock %}

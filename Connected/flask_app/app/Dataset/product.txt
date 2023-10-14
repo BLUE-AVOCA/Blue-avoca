@@ -1,0 +1,16 @@
+from app.models.user_models import Products
+db.create_all()
+product_join = Products(name = 'Giỏ xách handmade', type = 'Clothes') 
+pic = Products(name = 'Tranh số hóa', type = 'Stationery')
+noodle = Products(name = 'Mì ăn liền', type = 'Food')
+Ngucoc= Products(name = 'Ngũ cốc', type = 'Food')
+paper = Products(name = 'Tập vở', type = 'Stationery')
+
+db.session.add(product_join)
+db.session.add(noodle)
+db.session.add(Ngucoc)
+db.session.add(paper)
+
+db.session.commit()
+
+Products.query.all()

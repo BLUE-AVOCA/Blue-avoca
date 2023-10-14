@@ -1,0 +1,36 @@
+ 
+  <div class="d-flex flex-row justify-content-center">
+    <div class="container">
+      <div class="row mb-3">
+        {% for product in products %}
+            {% if loop.index % 3 == 1 %}
+                <div class="row mb-3">
+            {% endif %}
+
+            <div class="col-4">
+                <div class="card" style="width: 18rem">
+                  <img  src="{{ product.product_img }}" class="card-img-top" alt="...">
+                  <a href="{{ url_for('company.detail', id=product.company_id) }}" style="text-decoration: none; color:inherit" >
+                    <div class="card-body">
+                      
+                      <h5 class="card-title">{{product.product_name}}</h5>
+                      <p class="card-text">
+                        <p>GMV tại địa phương </p>
+                        <p>Giá sản phẩm: {{product.price}}</p>
+                      </p>
+                      <div class="d-flex flex-row justify-content-end">
+                        <p class="align-items-end fw-bold">{{product.company_id}}</p>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+             
+            </div>
+        
+            {% if loop.index % 3 == 0 or loop.last %}
+                </div> 
+            {% endif %}
+        {% endfor %}
+      </div>
+    </div>            
+  </div>
