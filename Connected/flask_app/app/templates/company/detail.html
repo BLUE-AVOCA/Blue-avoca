@@ -19,7 +19,7 @@
                             <p class="m-0"> <i class="fa-solid fa-phone"><span>{{ company.telephone }}</span></i></p>
                             <p class="m-0"> <i class="fa-solid fa-location-dot"> <span>TPHCM</span></i></p>
                             <p class="m-0"> <i class="fa-solid fa-location-dot"> 
-                                <a href="{{ url_for('/dash/') }}">View our dashboard</a>
+                                <a href="{{ url_for('/dash/', company_id= company.company_id ) }}">View our dashboard</a>
                             </i></p>
                         </div>
                     </div>
@@ -36,51 +36,53 @@
     </div>
     <div class="d-lex flex-column" style="margin: 150px;">
          <!-- DESCRIPTION BRAND  -->
-        <div class="">
-            <h3 class=" text-dark  mb-3 fonts">Mô tả</h3>
-            <div class="content_descrip w-75 m-auto m-0">
-                <div class="border border-dark w-100">
-                    <div class="">
-                        <h4 class="fonts">Yêu cầu kinh nghiệm</h4>
-                        <p>L.O.E: </p>
-                        <p>Vốn chủ: </p>
-                    </div>
-                    <div class="">
-                        <h4 class="fonts">Thủ tục phân phối</h4>
-                        <p>Liên hệ </p>
-                        <p>Vốn chủ: </p>
-                    </div>
-                </div>
+        <div class="my-2">
+            <h3 class=" text-dark  mb-3">Mô tả</h3>
+            <div class="shadow-sm p-3 rounded-3">
+                It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
             </div>
         </div>
             <!-- SHOW ITEMS  -->
-        <div class="mt-2">
-            <h3 class="text-dark mb-3 fonts">Sản Phẩm</h3>
-            <div class="d-flex flex-row justify-content-center">
+        <div class="mt-4">
+            <h3 class="text-dark mb-3 fonts">Sản Phẩm của chúng tôi</h3>
+            <div class="d-flex flex-row">
                 <div class="container">
-                    <div class="row mb-3">
-                        {% for i in range(0,3) %}
-                            <div class="col-4">
-                                <div class="card" style="width: 18rem">
-                                    <img  src="{{ url_for('static',filename='img/banh-tiramisu.jpg') }}" class="card-img-top" alt="...">
-                                    <div class="card-body">
-                                      <h5 class="card-title">Moon Cake</h5>
-                                      <p class="card-text">
-                                        <p>GMV tại địa phương </p>
-                                        <p>Giá sản phẩm:</p>
-                                      </p>
-                                      <div class="d-flex flex-row justify-content-end">
-                                        <p class="align-items-end fw-bold">Unami Store</p>
-                                      </div>
-                                    </div>
-                                  </div>
+                  <div class="row mb-3">
+                    {% for product in products %}
+                        {% if loop.index % 3 == 1 %}
+                            <div class="row mb-3">
+                        {% endif %}
+            
+                        <div class="col-4">
+                            <div class="card" style="width: 18rem">
+                              <img  src="{{ product.product_img }}" class="card-img-top" alt="...">
+                              <a href="{{ url_for('company.detail', id=product.company_id) }}" style="text-decoration: none; color:inherit" >
+                                <div class="card-body">
+                                  
+                                  <h5 class="card-title">{{product.product_name}}</h5>
+                                  <p class="card-text">
+                                    <p>GMV tại địa phương </p>
+                                    <p>Giá sản phẩm: {{product.price}}</p>
+                                  </p>
+                                  <!-- <div class="d-flex flex-row justify-content-end">
+                                    <p class="align-items-end fw-bold">{{product.company_id}}</p>
+                                  </div> -->
+                                </div>
+                              </a>
                             </div>
-                        {% endfor %}
-                    </div>
-                 </div>
-            </div>
+                         
+                        </div>
+                    
+                        {% if loop.index % 3 == 0 or loop.last %}
+                            </div> 
+                        {% endif %}
+                    {% endfor %}
+                  </div>
+                </div>            
+              </div>
         </div>
             
+    </div>
     </div>
 </div>
 {% endblock %}

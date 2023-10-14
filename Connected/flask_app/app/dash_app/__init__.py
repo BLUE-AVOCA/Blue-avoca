@@ -5,7 +5,8 @@ from dash.dependencies import Output, Input
 import pandas as pd
 import plotly.express as px
 import os
-
+from app.models.test2 import Product
+from urllib.parse import urlparse, parse_qs
 
 external_stylesheets = [
     "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css",
@@ -20,7 +21,6 @@ external_stylesheets = [
 
 
 def create_dash_application(flask_app):
-    # sales = pd.read_csv('/Users/tranvo1233/VSCode/MyShecodes/Connected/flask_app/app/dash_app/data/brand.csv')
 
     SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
     path_sales = os.path.join(SITE_ROOT, "data", "brand.csv")
@@ -42,7 +42,6 @@ def create_dash_application(flask_app):
                     <!-- BOOTSTRAP -->
                     {%css%}
                     <title>{%title%}</title>
-                    <link rel="icon" href="../static/img/meat.png"
                 </head>
 
                 <body>
@@ -51,13 +50,14 @@ def create_dash_application(flask_app):
                                 <div class="header_logo container-fluid">
                                     <a class="navbar-brand" href="http://127.0.0.1:5000"  style="color: black;">
                                         <img width="80" height="40" src="../static/img/logo.png" alt="logo">
-                                        SheCodes
                                     </a>
                                     <div class="">
                                         <ul class=" m-0 d-flex flex-row align-items-center " style="list-style:none;">
                                             <li class="p-2"><a href="http://127.0.0.1:5000" style='text-decoration: none; color:inherit'>Home</a></li>
                                             <li class="p-2"><a href="http://127.0.0.1:5000/about" style='text-decoration: none; color:inherit'>About Us</a></li>
                                             <li class="p-2"><a href="http://127.0.0.1:5000/products" style='text-decoration: none; color:inherit'>Products</a></li>
+                                            <li class="p-2 me-3"><a href="http://127.0.0.1:5000/company" style='text-decoration: none; color:inherit'>Company</a></li>
+
                                             <li class="">
                                                 <a class="text-light" href="http://127.0.0.1:5000/auth/login">
                                                     <button type="button" class="btn btn-primary">Login</button>
@@ -87,49 +87,68 @@ def create_dash_application(flask_app):
  
         '''
 
-
-    dash_app.layout = html.Div( 
-        className='d-flex flex-row justify-content-center',   
-        children =[
-            html.Div(
-                className = 'container',
-                children = [
+   
+    dash_app.layout = html.Div([
+        dcc.Location(id='url', refresh=False),
+        html.Div(id='page-content')
+    ])
+        
+    @dash_app.callback(Output('page-content', 'children'),
+                  [Input('url', 'href')])
+    def display_page(href):
+        parsed_url = urlparse(href)
+        query_params = parse_qs(parsed_url.query)
+        
+        # Check if 'company_id' is present in the query parameters
+        company_id = query_params.get('company_id', None)
+        
+        if company_id:
+            company_id = company_id[0]  # Assuming the URL has only one company_id
+            return html.Div( 
+                className='d-flex flex-row justify-content-center',   
+                children =[
                     html.Div(
-                        className= 'row mb-3',
-                        children=[
-                            # html.Div('Plotly Dash',className="m-4"),
-                            # html.Button("nice",className='btn btn-primary'),
+                        className = 'container',
+                        children = [
                             html.Div(
-                                className='col-6', 
-                                children= [
-                                    dcc.Dropdown(
-                                        id = "input", 
-                                        options = [{"label": "USA", "value" :"USA"}, {"label": "Austria", "value":'Austria'},{"label": "Greece", "value" :"Greece"}],
-                                        placeholder="Select a country",
-                                        style={'width': '50%'}
-                                        # style={"width": "50%";},
+                                className= 'row mb-3',
+                                children=[
+                                    # html.Div('Plotly Dash',className="m-4"),
+                                    # html.Button("nice",className='btn btn-primary'),
+                                    html.Div(
+                                        className='col-6', 
+                                        children= [
+                                            dcc.Dropdown(
+                                                id = "input", 
+                                                options = [{"label": "USA", "value" :"USA"}, {"label": "Austria", "value":'Austria'},{"label": "Greece", "value" :"Greece"}],
+                                                placeholder="Select a country",
+                                                style={'width': '50%'}
+                                                # style={"width": "50%";},
+                                            ),
+                                            dcc.Graph(id='graph', className='w-80'),
+                                        ]
                                     ),
-                                    dcc.Graph(id='graph', className='w-80'),
-                                ]
-                            ),
-                            html.Div(
-                                className='col-6',
-                                children = [
-                                    dcc.DatePickerSingle(id='sale_date',
-                                        min_date_allowed=sales['InvoiceDate'].min(),
-                                        max_date_allowed=sales['InvoiceDate'].max(),
-                                        initial_visible_month= date(2010,1,26),
-                                        date=date(2010,1,26),
-                                        style={'width':'200px', 'margin':'0 auto'}),
-                                    dcc.Graph(id='sale-date-graph'),
-                                ]
-                            ),
-                        ]     
+                                    html.Div(
+                                        className='col-6',
+                                        children = [
+                                            dcc.DatePickerSingle(id='sale_date',
+                                                min_date_allowed=sales['InvoiceDate'].min(),
+                                                max_date_allowed=sales['InvoiceDate'].max(),
+                                                initial_visible_month= date(2010,1,26),
+                                                date=date(2010,1,26),
+                                                style={'width':'200px', 'margin':'0 auto'}),
+                                            dcc.Graph(id='sale-date-graph'),
+                                        ]
+                                    ),
+                                ]     
+                            )
+                        ]
                     )
                 ]
             )
-        ]
-    )
+        else:
+            return html.H1('404 - Page not found')
+
     @dash_app.callback(
         Output(component_id = 'graph',component_property='figure'),
         Input(component_id='input',component_property='value')
@@ -143,8 +162,6 @@ def create_dash_application(flask_app):
             sales_country = sales_country.sort_values(by="Total Quantity",ascending=False).reset_index(drop=True)
             bar = px.bar(data_frame = sales_country, x="StockCode",y="Total Quantity",title=f'Total Quantity in {country}')
         else:
-    #         sales_country= sales_country[sales_country["Country"] ==  "USA"].groupby("StockCode")["Quantity"].sum().reset_index(name='Total Quantity')
-    #         sales_country = sales_country.sort_values(by="Total Quantity",ascending=False).reset_index(drop=True)
             total = sales_country.groupby("Country")["Quantity"].sum().reset_index(name="Total Quantity").sort_values(by="Total Quantity",ascending=False).reset_index(drop=True)
             bar = px.bar(data_frame = total, x="Country",y="Total Quantity",title='Total Quantity by Country')
         return bar
@@ -162,10 +179,10 @@ def create_dash_application(flask_app):
         sales_country = sales_country.sort_values(by='Total quantity', ascending=False).reset_index(drop=True)
         bar =  px.bar(data_frame = sales_country[:20], x="StockCode",y="Total quantity",title=f'Total Quantity in {input_date}')
         return bar
+
     if __name__ == "__main__":
         dash_app.run_server(debug = True)
-    return dash_app
-
+        return dash_app
 
 
 
