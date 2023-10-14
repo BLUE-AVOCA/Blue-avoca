@@ -1,0 +1,9 @@
+<div class="d-flex flex-row justify-content-between ">
+    <div class="">
+        <h3 class="text-secondary">Gợi ý ngày hôm nay</h3>
+    </div>
+    <form method="POST" action="{{ url_for('products.search') }}" class="d-flex flex-row " role="search">
+        <input name="search_product" class="form-control me-2" type="search" placeholder="Nhập mô tả" aria-label="Search">
+        <button class="btn" type="submit"><i class="bi bi-search"></i></button>
+    </form>
+</div>
