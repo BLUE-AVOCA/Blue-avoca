@@ -1,6 +1,6 @@
 # AVOCA Website
 
-Trang web kết nối người dùng với nhà phân phối nhằm 
+![Alt text](demo/home.png)
 
 ## Features
 
@@ -58,7 +58,6 @@ $ pip install -r requirements.txt
 ### Set up 
 
 ```
-cd connected/
 set FLASK_APP=app 
 set FLASK_ENV=development
 set FLASK_DEBUG=1
