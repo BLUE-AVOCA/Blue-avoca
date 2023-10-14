@@ -135,17 +135,12 @@ def recomendation():
         return render_template('products/test_product.html')
     else :  
         output = []
-        #print('test')
-        # output = recommend_user(3)
         output = recommend((int(s[0])))
-        #print(output)
         return render_template('products/recomendation_test.html', id_product = id_product , output = output)
     
 @bp.route('/recomendation_user')
 def recomendation_user():
     output = recommend_user(3)
-    print(output)
     return render_template('products/user_recomendation.html', output = output) 
 
 
-# @bp.route('/search', methods = ('GET', 'POST'))
