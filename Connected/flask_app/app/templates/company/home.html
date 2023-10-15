@@ -1,0 +1,37 @@
+
+        <div class="d-flex flex-row justify-content-center">
+            <div class="container">
+              <div class="row mb-3">
+                {% for company in companies %}
+                    {% if loop.index % 3 == 1 %}
+                        <div class="row mb-3">
+                    {% endif %}
+        
+                    <div class="col-4">
+                        <div class="card" style="width: 18rem">
+                          <img  src="{{ company.logo }}" class="card-img-top" alt="...">
+                          <a href="{{ url_for('company.detail', id=company.company_id) }}" style="text-decoration: none; color:inherit" >
+                            <div class="card-body">
+                              
+                              <h5 class="card-title">{{company.company_name}}</h5>
+                              <p class="card-text">
+                                <p>{{company.category}}</p>
+                                <p>Telephone: {{company.telephone}}</p>
+                              </p>
+                            </div>
+                          </a>
+                        </div>
+                     
+                    </div>
+                
+                    {% if loop.index % 3 == 0 or loop.last %}
+                        </div> 
+                    {% endif %}
+                {% endfor %}
+              </div>
+            </div>            
+          </div>
+
+
+
+

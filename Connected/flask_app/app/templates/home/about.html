@@ -1,0 +1,64 @@
+{% extends 'layout.html' %}
+
+{% block main %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='custom.css') }}">
+        <div class="d-flex flex-row m-4 align-items-center justify-content-center h-100">
+            <div class="col-5 text-center">
+                <!-- <div class="mb-5">
+                    <img class="img-fluid"  src="{{ url_for('static',filename='img/decorate2.png') }}" alt="decorate">
+                </div>
+                <div class="mt-5 z-n1 position-absolute" style='top:215px; left:100px;'>
+                    <h1 class='display-6'>WHAT IS OUR MISSION</h1>
+                </div> -->
+                <h1 class='display-6'>WHAT IS OUR MISSION</h1>
+                <p class="">Our team gathers and updates the authentic data about potential products daily. Within a
+                    click, not only reliable source of data is given, but you can also get access to figures about
+                    the market, competitors, suppliers, etc
+                </p>
+                <!-- Accordian Button -->
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Who is our target?
+                          </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                          <div class="accordion-body">
+                            <strong>We target at</strong> customers with low budget
+                          </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            Who are our partners
+                          </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                          <div class="accordion-body">
+                            <strong>We corporate with </strong> VinGroup, Samyang,S-mart, Samsung,...
+                          </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            Is our platform free?
+                          </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                          <div class="accordion-body">
+                            <strong>Absolutely</strong> We are here helping you find the right distributors.
+                          </div>
+                        </div>
+                      </div>
+                </div>
+            </div>
+            <div class="col-7 d-flex align-items-center">    
+                    <img class='img-fluid mx-auto' width="" height="" src="{{ url_for('static',filename='img/decorate3.png') }}" alt="">
+            </div>
+        </div>
+       
+        
+{% endblock %}
