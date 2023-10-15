@@ -34,6 +34,7 @@ $ git clone https://github.com/BLUE-AVOCA/Blue-avoca.git
 ### Set up enviroment 
 
 ```
+$ cd Connected\flask_app>
 $ cd env/scripts
 ```
 
