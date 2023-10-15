@@ -20,10 +20,8 @@ def create_data(app):
                     data.append(row)
             return data
 
-        # csv_data = read_csv('/Users/tranvo1233/VSCode/MyShecodes/Connected/flask_app/app/Dataset/products.csv')
-
         SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
-        path_data = os.path.join(SITE_ROOT, "products.csv")
+        path_data = os.path.join(SITE_ROOT, "products2.csv")
         csv_data = read_csv(path_data)
 
         for item in csv_data:
@@ -43,14 +41,22 @@ def create_data(app):
             db.session.commit()
 
        
-        company_1 = Company(
-            company_name="Your life",
-            logo="https://img.freepik.com/free-vector/bird-colorful-logo-gradient-vector_343694-1365.jpg",
-            background_img="https://hoadecor.vn/wp-content/uploads/2021/08/cua-hang-hoa-17.jpg",
-            telephone="0869848290"
-        )
-        db.session.add_all([company_1])
-        db.session.commit()
+        SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
+        path_data = os.path.join(SITE_ROOT, "companies2.csv")
+        csv_data = read_csv(path_data)
+
+        for company in csv_data:
+            product = Company(
+                company_id = company["Company ID"],
+                company_name = company["Company Name"],
+                logo = company["Logo"],
+                background_img = company["Background_img"],
+                telephone = company["Telephone"],
+                category = company["Category"]
+                )
+            db.session.add(product)
+            db.session.commit()
+            
          # Retrieve the added data
         added_products = Product.query.all()
         companies = Company.query.all()
@@ -59,4 +65,4 @@ def create_data(app):
         for product in added_products:
             print(f"Added product: {product.product_name} (ID: {product.product_id})")
         for company in companies:
-            print("Company: {}".format(company.company_name) )
+            print("Company: {}".format(company.category) )

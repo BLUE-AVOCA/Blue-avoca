@@ -1,5 +1,5 @@
 from flask import render_template, redirect, url_for ,request,flash
-from app.models.test2 import Customers, Product
+from app.models.test2 import Customers
 from app.auth import bp
 from flask_login import login_user, login_required, current_user
 from app.models.test2 import db
@@ -16,8 +16,7 @@ def register():
 @bp.route('/profile/')
 # @login_required
 def profile():
-    products = Product.query.limit(3).all()
-    return render_template('form/profile.html',products = products)
+    return render_template('form/profile.html')
 
 @bp.route('/register/', methods=['POST'])
 def register_post():
@@ -53,4 +52,5 @@ def login_post():
     print(customers)
     return redirect(url_for('auth.profile'))
     
+
 
