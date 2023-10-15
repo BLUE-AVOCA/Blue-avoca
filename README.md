@@ -14,7 +14,7 @@ HIAP - Giải pháp về kết nối nhượng quyền/phân phối thông minh 
 
 - **Payment management system**: Quản lý thanh toán dành cho đơn vị phân phối/nhượng quyền (thanh toán bằng PayPal)
 
-- **Search system**: Tiềm kiếm sản phẩm theo tên, nhu cầu khách hàng.
+- **Search system**: Tiềm kiếm sản phẩm theo tên, nhu cầu khách hàng và nhà phân phối theo mặt hàng.
 
 - **User system**: Đăng kí, đăng nhập và quản lý tài khoản của người dùng.
 
