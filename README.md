@@ -42,15 +42,6 @@ activate or .\activate
 ```
 
 
-### Change into the Website/Scraper directory:
-
-```
-$ cd..
-$ cd.. 
-$ cd Connected\flask_app
-```
-
-
 ### Install the required dependencies using pip:
 
 ```
