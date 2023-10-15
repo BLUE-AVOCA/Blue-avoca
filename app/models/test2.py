@@ -32,8 +32,10 @@ class Product(db.Model):
 class Company(db.Model):
     __tablename__ = 'companies'
     __table_args__ = {'extend_existing': True}
-    company_id = db.Column(db.Integer(), primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
+    company_id = db.Column(db.Integer())
     company_name = db.Column(db.String(255), nullable=False)
     logo =  db.Column(db.String(255), nullable=False)
     background_img = db.Column(db.String(255), nullable=False)
     telephone = db.Column(db.String(255), nullable=False)
+    category =  db.Column(db.String(255), nullable=False)

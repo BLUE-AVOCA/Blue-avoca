@@ -1,12 +1,6 @@
 from app.products import bp
-from app.models.test2 import Product
+from app.models.test2 import Product, Company
 import pandas as pd 
-import numpy as np
-
-
-from scipy.sparse.linalg import svds
-from scipy.sparse import csc_matrix
-
 from flask import render_template, request, url_for, redirect
 from sklearn.metrics.pairwise import cosine_similarity
 import os
@@ -45,39 +39,6 @@ pivot_users_ratings = pivot_users_ratings.fillna(0)
 pivot_products_ratings = pivot_users_ratings.T
 
 
-user_ratings_centered  = pivot_ratings.sub(avg_ratings, axis=0)
-user_ratings_centered.fillna(0, inplace = True)
-
-user_ratings_centered_sparse = csc_matrix(user_ratings_centered)
-# Decompose the matrix
-U, sigma, Vt = svds(user_ratings_centered_sparse)
-sigma = np.diag(sigma)
-recalculated_ratings = np.dot(np.dot(U,sigma), Vt)
-recalculated_ratings = recalculated_ratings + avg_ratings.values.reshape(-1,1)
-
-pred_SVC = pd.DataFrame(recalculated_ratings, 
-                        index=pivot_ratings.index,
-                        columns=pivot_ratings.columns)
-def recommend_user(user_id):
-    recommend_products = []
-    user_ratings = pred_SVC.loc[user_id,:].sort_values(ascending=False)
-    products_idxs = user_ratings.index.tolist()
-    for idx in products_idxs:
-        product = products[products["product_id"] == idx]
-        product= {
-            "product_id": product["product_id"].values[0], 
-            "product_name": product["product_name"].values[0],
-            "price": product["price"].values[0]
-        }
-        recommend_products.append(product)
-
-    user = users[users['user_id'] == user_id]
-    userName = user['username'].values[0]
-    userId = user["user_id"].values[0]
-    print("User id: {} Username: {} /n".format(userId, userName))
-    print(recommend_products[:10])
-    return recommend_products
-
 def recommend(product_id):
 
     # Find the similarities between products
@@ -101,12 +62,38 @@ def recommend(product_id):
 users_similarities = cosine_similarity(pivot_users_ratings)
 users_similarities_df = pd.DataFrame(users_similarities, index = pivot_users_ratings.index, columns = pivot_users_ratings.index)
 
+def KNN(user_id, product_id_want_to_pred):
+    user = users_similarities_df.loc[user_id]
+    order_user_similarities = user.sort_values(ascending = False)
+    nearest_neighbor = order_user_similarities[0:10].index #can use order_user_similarities[0:10] to limit alike users
+    neighbor_ratings = pivot_ratings.reindex(nearest_neighbor)
+
+    #print("His neighbor rating is: {}".format(neighbor_ratings[product_id_want_to_pred].mean()))
+    copy_pivot_users_ratings = pivot_users_ratings.copy()
+    # Drop the product we want to predict
+    copy_pivot_users_ratings.drop(product_id_want_to_pred, axis=1,inplace=True)
+    #Separate our user 
+    target_user_x = copy_pivot_users_ratings.loc[[user_id]]
+    other_users_y = pivot_ratings[product_id_want_to_pred]
+    #We only care about the users who have retailed the products
+    other_users_x = copy_pivot_users_ratings[other_users_y.notnull()]
+    #Now drop NaN values
+    other_users_y.dropna(inplace = True)
+
+    #Time for the show
+    user_knn = KNeighborsRegressor(metric='cosine', n_neighbors = 10)
+    user_knn.fit(other_users_x, other_users_y)
+    user_user_pred = user_knn.predict(target_user_x)
+
+    #print("His predicted KNN rating is: {}".format(user_user_pred[0]))
+    return user_user_pred
 
 
 @bp.route('/')
 def index():
-    products = Product.query.limit(200).all()
-    return render_template('products/product_layout.html',products = products)
+    companies = Company.query.all()
+    products = Product.query.limit(20).all()
+    return render_template('products/product_layout.html', products = products)
 
 @bp.route('/search', methods=('GET', 'POST'))
 def search():
@@ -118,6 +105,7 @@ def search():
         return render_template('products/product_layout.html',products = products )
     return search_value
 
+
 @bp.route('/find', methods = ('GET', 'POST'))
 def recomendation_in_product():
     products = Product.query.all();
@@ -125,7 +113,6 @@ def recomendation_in_product():
         id_product = request.form.get('id_product')
         return redirect(url_for('products.recomendation', id_product = id_product))
     return render_template('products/product_layout.html', products = products)
-
 
 @bp.route('/recomendation',  methods=['GET', 'POST'])
 def recomendation():
@@ -135,12 +122,9 @@ def recomendation():
         return render_template('products/test_product.html')
     else :  
         output = []
+        #print('test')
         output = recommend((int(s[0])))
-        return render_template('products/recomendation_test.html', id_product = id_product , output = output)
-    
-@bp.route('/recomendation_user')
-def recomendation_user():
-    output = recommend_user(3)
-    return render_template('products/user_recomendation.html', output = output) 
+        #print(output)
+        return render_template('products/recomendation_test.html', id_product = id_product , output = output) 
 
-
+# @bp.route('/search', methods = ('GET', 'POST'))

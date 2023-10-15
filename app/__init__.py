@@ -2,7 +2,7 @@ from flask import Flask
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
-
+import os
 
 db = SQLAlchemy()
 
@@ -13,6 +13,8 @@ def create_app():
     
     app.config['SECRET_KEY'] = 'secret-key-goes-here'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.user'
+    # app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
+    # db = SQLAlchemy(app)
     # app.config['SQLALCHEMY_DATABASE_URI'] = postgresURI
     
     db.init_app(app)
@@ -24,6 +26,7 @@ def create_app():
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
+
 
     # from app.Dataset.data import create_data
     # create_data(app)

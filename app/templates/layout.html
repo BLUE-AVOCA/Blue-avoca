@@ -12,7 +12,7 @@
         <!-- CSS  -->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='base.css') }}">
     <link rel="icon" href="{{ url_for('static',filename='img/meta.png') }}">
-    <title>[Avoca] {{ title }}</title>
+    <title>[SheCodes] {{ title }}</title>
 </head>
 
 <body>
@@ -28,6 +28,8 @@
                             <li class="p-2"><a href="{{ url_for('main.index') }}">Home</a></li>
                             <li class="p-2"><a href="{{ url_for('main.about') }}">About Us</a></li>
                             <li class="p-2"><a href="{{ url_for('products.index') }}">Products</a></li>
+                            <li class="p-2 me-3"><a href="{{ url_for('company.index') }}">Company</a></li>
+
                             <li class="">
                                 <a class="text-light" href="{{ url_for('auth.login') }}">
                                     <button type="button" class="btn btn-primary">Login</button>
