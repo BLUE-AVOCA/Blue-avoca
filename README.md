@@ -1,5 +1,7 @@
 # AVOCA Website
 
+HIAP - Giải pháp về kết nối nhượng quyền/phân phối thông minh cho doanh nghiệp.
+
 ![Alt text](demo/home.png)
 
 ## Features
