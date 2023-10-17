@@ -22,7 +22,7 @@ Tụi mình đã phải cùng nhau vượt qua khó khăn:
 Làm mới idea cho phù hợp với các xu hướng hiện tại, tìm ra điểm nổi bật so với các mô hình Affiliate Marketing và Dropshipping (indirect competitors). Qua rất nhiều sự nghi ngờ và phản đối, chúng mình cũng tìm ra được gap và cơ hội thị trường để thâm nhập, phù hợp với định hướng phát triển của xã hội.
 Chúng mình cũng thiếu dataset và phải tự tổng hợp data từ nhiều nguồn để có thể implement bản MVP của AI.  Cuối cùng, chúng mình đã thành công với dataset hơn 100000 data points và 6 suggestion models không chỉ dựa trên độ tương quan giữa người dùng và sản phẩm mà còn tận dụng dữ liệu về vị trí địa lý nhằm giảm thời gian thu thập dữ liệu cho quá trình tăng trưởng.
 
-![Alt text](demo/home.png)
+![Alt text](demo/demo.gif)
 
 ## Features
 
